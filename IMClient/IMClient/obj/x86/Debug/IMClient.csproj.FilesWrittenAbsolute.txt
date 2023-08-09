@@ -1,0 +1,5 @@
+/home/douglas/csTest/IMClient/IMClient/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/douglas/csTest/IMClient/IMClient/bin/Debug/IMClient.exe.mdb
+/home/douglas/csTest/IMClient/IMClient/bin/Debug/IMClient.exe
+/home/douglas/csTest/IMClient/IMClient/obj/x86/Debug/IMClient.exe
+/home/douglas/csTest/IMClient/IMClient/obj/x86/Debug/IMClient.exe.mdb

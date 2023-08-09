@@ -1,0 +1,5 @@
+IMSERVER SQL관련 정보들
+
+데이터베이스 켜는법
+mysql -u root -p
+비밀번호 : IMSQL

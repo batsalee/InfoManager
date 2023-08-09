@@ -1,0 +1,14 @@
+url : https://maps.googleapis.com/maps/api/directions/xml?origin=37.275669,127.132489&destination=37.274922,127.143794&mode=transit&key=AIzaSyAkM6C1d9pbg6hYJHOFRo72vNpFzHNwGU8
+
+키 : AIzaSyAkM6C1d9pbg6hYJHOFRo72vNpFzHNwGU8
+
+설명 사이트 : https://developers.google.com/maps/documentation/directions/intro?hl=ko
+
+사용자정보 보안이 있어야하므로 http가 아닌 https 를 사용했다
+
+
+지오코딩
+url : https://maps.googleapis.com/maps/api/geocode/xml?address=suwon&key=AIzaSyAkM6C1d9pbg6hYJHOFRo72vNpFzHNwGU8
+
+지역명 영어로 된 사이트
+http://goodjoe.tistory.com/entry/%EC%A0%84%EA%B5%AD-%EC%A3%BC%EC%86%8C%EB%B3%84-%EC%98%81%EB%AC%B8-%ED%91%9C%EA%B8%B0%EB%B2%95

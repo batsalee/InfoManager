@@ -1,0 +1,15 @@
+ip 
+내부 192.168.111.130
+외부 123.141.225.115
+
+
+sql기본 명령어들 사이트
+http://egloos.zum.com/kwon37xi/v/1634694
+
+멀티쓰레드방식할때 컴파일명령어 추가되는거
+gcc main.c -o socket 
+-I/usr/include/mysql
+-L/usr/lib
+-lmysqlclient
+-lpthread
+-D_REENTRANT

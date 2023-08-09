@@ -1,0 +1,26 @@
+국토교통부에서 제공하는 api사이트
+
+http://openapi.its.go.kr/
+
+아이디   IMTraffic
+비번     IMTraffic11
+
+인증키 1470249769108
+
+예시 url
+http://openapi.its.go.kr/api/NTrafficInfo?key=1470249769108&ReqType=2
+&MinX=127.800000&MaxX=127.890000&MinY=34.900000&MaxY=35.100000
+
+좌표 확인 // x,y좌표 반대니까 유의하고
+maps.google.co.kr/
+
+
+-<data>
+<roadsectionid>3280026202</roadsectionid>		// 도로구간의 고유식별번호
+<avgspeed>92</avgspeed>					// 평균속도
+<startnodeid>3280011902</startnodeid>			// 도로구간 시작노드의 고유식별번호
+<roadnametext>남해고속도로</roadnametext>		// 해당 도로구간의 도로명칭
+<traveltime>165</traveltime>				// 통생시간(초)
+<endnodeid>3940002400</endnodeid>			// 도로구간 종료노드의 고유식별번호
+<generatedate>20160809032450</generatedate>		// 정보생성일시
+</data>

@@ -35,7 +35,10 @@
 # 개발 내용
 Client, Server, DB Server 3단 구성</br>
 
-※ 개발 당시 TTS서비스가 초창기시절이라 일부 제약이 있었기 때문에 현재 push되어 있는 프로젝트에는 아래 내용 중 일부를 서버에서 처리합니다.</br>
+※ 특이 사항
+개발 당시 TTS서비스가 초창기시절이라 일부 제약이 있었기 때문에 현재 push되어 있는 프로젝트에는 아래 내용 중 Client의 역할 일부를 서버에서 처리 후 클라이언트로 전송합니다.</br>
+당시 Linux기반 TTS이던 espeak를 사용하면 아래의 내용과 동일하게 프로젝트 구성을 할 수 있었으나 당시의 espeak는 한국어 TTS의 음질이나 Quality가 굉장히 떨어졌고 그로인해 어쩔 수 없이 Microsoft Heami TTS를 채택해야 했습니다.</br>
+그를 위해 Client측을 Windows기반인 Windows 10 iot로 변경해야 했으며 쾌적한 처리를 위해 서버단에서 정보만 전달하는것이 아닌 정보를 파싱하여 음성파일까지 만든 후 해당 파일을 전송하는 식으로 처리할 수 밖에 없었습니다.</br>
 
 ## 1. Client
 1\) Client의 구성</br>
@@ -113,5 +116,54 @@ Client, Server, DB Server 3단 구성</br>
 - LOCATION_CODE 테이블
   - 200여개의 시/군/구 단위 지역명과 지역코드 저장
 <img width="80%" src="https://github.com/batsalee/HelloGitHub/assets/109213754/99474b1d-b9c9-41e2-8ddb-82059c0bc76a"/>
+
+## 4. 프로그램 구성도
+<img width="80%" src="https://github.com/batsalee/HelloGitHub/assets/109213754/98d521c1-ffaa-40b3-a7d3-f04270629777"/>
+<img width="80%" src="https://github.com/batsalee/HelloGitHub/assets/109213754/462c1b09-314c-4939-9346-881a54aaba5c"/>
+
+---
+
+# 날씨 및 교통정보
+1\) 날씨정보
+- 사용자정보의 도착지 사용
+- 도착지의 지역코드 기반 기상청에 RSS로 Xml획득
+- Xml 파싱을 통해 날씨정보 획득
+- 교통정보의 통행소요시간만큼의 이후의 날씨정보 반환
+
+2\) 교통정보
+- 사용자정보의 출발지와 도착지 사용
+- GeoCoding을 이용해 출발지, 도착지의 위도/경도 획득
+- 위도/경도 기반 Google maps에 RSS로 Xml획득
+- Xml 파싱을 통해 통행소요시간 획득
+
+---
+
+# 적용 기술
+1\) RSS(Really Simple Syndication)
+- 웹에 필요한 정보 요청 시 xml로 결과를 반환
+- 날씨정보(기상청), 교통정보(구글 maps) 획득 시 사용
+2\) TTS(Text to Speech)
+- 날씨 및 교통정보를 parsing하여 음성으로 출력
+- 별도의 확인없이 자동으로 정보 획득 가능
+3\) GeoCoding
+- DB의 사용자 정보에는 지역명만 저장
+- 교통정보 획득에는 위도/경도 정보가 필요
+- 지역명을 입력하면 위도/경도를 반환하는 기능을 구현
+4\) RFID
+- 별도의 입력 없이 사용자의 접근을 인식
+5\) 라즈베리파이
+- 소형 컴퓨터로써 Client 프로그램이 탑재됨
+6\) MySQL
+- 사용자정보 및 지역정보에 대한 데이터베이스 구현
+7\) 소켓프로그래밍
+- Server와 DB Server와 Client간에 TCP기반 소켓통신
+- 시스템만 설치하면 어디에서든 사용할 수 있게 하기 위해 Server와 Client를 분리
+8\) C/C# 프로그래밍
+- DB Server는 C언어 기반 프로그램
+- Client와 정보획득을 위한 Server는 C#기반 프로그램
+9\) 운영체제
+- DB Server는 Ubuntu기반의 Linux
+- Server는 Windows 7
+- Clinet는 Windows 10 iot
 
 ---

@@ -143,25 +143,33 @@ Linux기반의 espeak를 사용해서 구현했던 코드를 이 README 파일 �
 1\) RSS(Really Simple Syndication)
 - 웹에 필요한 정보 요청 시 xml로 결과를 반환
 - 날씨정보(기상청), 교통정보(구글 maps) 획득 시 사용
+
 2\) TTS(Text to Speech)
 - 날씨 및 교통정보를 parsing하여 음성으로 출력
 - 별도의 확인없이 자동으로 정보 획득 가능
+
 3\) GeoCoding
 - DB의 사용자 정보에는 지역명만 저장
 - 교통정보 획득에는 위도/경도 정보가 필요
 - 지역명을 입력하면 위도/경도를 반환하는 기능을 구현
+  
 4\) RFID
 - 별도의 입력 없이 사용자의 접근을 인식
+  
 5\) 라즈베리파이
 - 소형 컴퓨터로써 Client 프로그램이 탑재됨
+
 6\) MySQL
 - 사용자정보 및 지역정보에 대한 데이터베이스 구현
+
 7\) 소켓프로그래밍
 - Server와 DB Server와 Client간에 TCP기반 소켓통신
 - 시스템만 설치하면 어디에서든 사용할 수 있게 하기 위해 Server와 Client를 분리
+
 8\) C/C# 프로그래밍
 - DB Server는 C언어 기반 프로그램
 - Client와 정보획득을 위한 Server는 C#기반 프로그램
+
 9\) 운영체제
 - DB Server는 Ubuntu기반의 Linux
 - Server는 Windows 7

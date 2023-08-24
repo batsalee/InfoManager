@@ -35,10 +35,11 @@
 # 개발 내용
 Client, Server, DB Server 3단 구성</br>
 
-※ 특이 사항
+※ 특이 사항</br>
 개발 당시 TTS서비스가 초창기시절이라 일부 제약이 있었기 때문에 현재 push되어 있는 프로젝트에는 아래 내용 중 Client의 역할 일부를 서버에서 처리 후 클라이언트로 전송합니다.</br>
 당시 Linux기반 TTS이던 espeak를 사용하면 아래의 내용과 동일하게 프로젝트 구성을 할 수 있었으나 당시의 espeak는 한국어 TTS의 음질이나 Quality가 굉장히 떨어졌고 그로인해 어쩔 수 없이 Microsoft Heami TTS를 채택해야 했습니다.</br>
 그를 위해 Client측을 Windows기반인 Windows 10 iot로 변경해야 했으며 쾌적한 처리를 위해 서버단에서 정보만 전달하는것이 아닌 정보를 파싱하여 음성파일까지 만든 후 해당 파일을 전송하는 식으로 처리할 수 밖에 없었습니다.</br>
+Linux기반의 espeak를 사용해서 구현했던 코드를 이 README 파일 가장 아래에 첨부해두었습니다.</br>
 
 ## 1. Client
 1\) Client의 구성</br>
@@ -167,3 +168,90 @@ Client, Server, DB Server 3단 구성</br>
 - Clinet는 Windows 10 iot
 
 ---
+
+# 고난의 흔적
+- 음성파일 전달이 아닌 문자열 전달 후 클라이언트에서 TTS로 출력하는 방식으로 구현했던 코드입니다.
+- Client를 Windows 10 iot가 아닌 Ubuntu로 구성 후 C언어 기반으로 TTS출력을 하고자 했으나 당시 TTS의 Quality문제로 현재 레포지토리의 내용처럼 변경되었습니다.
+
+```C#
+// 6. 날씨 정보 획득
+Weather weather = new Weather();
+weather.initWeather(userInfo);
+
+// 7. 날씨 문장 구성
+int index = durationHour / 3;
+string weatherText = "오늘 " + userInfo.getArriveLocationName() + "의 날씨는 " + weather.getWeatherList()[index].InnerText +
+" 기온은 " + weather.getTempList()[index].InnerText + "도 강수확률은 " + weather.getPopList()[index].InnerText +
+"퍼센트 습도는 " + weather.getRehList()[index].InnerText + "퍼센트입니다";
+
+// 8. 리눅스서버로 날씨, 교통정보 반환		
+string defaultText = userInfo.getUserName() + "님 안녕하십니까 ";		
+string resInfo = defaultText + trafficText + weatherText;
+				
+communicator.sendCommunicate(resInfo);		
+```
+
+```C
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+
+void main()
+{
+	char ipAddr[20];
+	int portNo;
+
+	// ip, port 입력
+	printf("Server IP(default 192.168.11.9) : ");
+	scanf("%s", ipAddr);
+	printf("port Number(default 1105) : ");
+	scanf("%d", &portNo);
+
+	while(1) {
+		int inputTag;
+		printf("태그인식 : ");
+		scanf("%d", &inputTag);
+		char RFIDTag[20];
+		sprintf(RFIDTag, "%d", inputTag);
+		
+		// 1. socket()
+		int clnt_sock = socket(PF_INET, SOCK_STREAM, 0);
+		if(clnt_sock == -1) {
+			fputs("socket() error", stderr);
+			continue;
+		}
+
+		// connect 준비		
+		struct sockaddr_in serv_addr;
+		memset(&serv_addr, 0, sizeof(serv_addr));
+		serv_addr.sin_family = AF_INET;
+		serv_addr.sin_addr.s_addr = inet_addr(ipAddr);
+		serv_addr.sin_port = htons(portNo);
+
+		int serv_addr_size = sizeof(serv_addr);
+
+		// 2. connect()
+		if( connect(clnt_sock, (struct sockaddr*)&serv_addr, serv_addr_size) == -1 ) {
+			fputs("connect() error", stderr);
+			close(clnt_sock);
+			continue;
+		}
+		
+		// RFID Tag 전송
+		send(clnt_sock, RFIDTag, sizeof(RFIDTag), 0);
+
+		// 모든 정보를 문장화한 결과를 받음
+		char recvRes[1024];
+		recv(clnt_sock, recvRes, sizeof(recvRes), 0);
+
+		// TTS로 내용을 음성으로 출력
+		char ttsParam[1024+20] = "";
+		sprintf(ttsParam, "espeak -v ko \"%s\"", recvRes);
+		system(ttsParam);
+
+		close(clnt_sock);
+	}
+}
+

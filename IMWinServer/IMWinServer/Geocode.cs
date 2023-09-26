@@ -12,7 +12,7 @@ namespace IMClient
 	{
 		string coordinates;
 		XmlNodeList location;
-		const string googleKey = "AIzaSyAkM6C1d9pbg6hYJHOFRo72vNpFzHNwGU8";
+		const string googleKey = ""; // GitGuardian Mail 전송 후 삭제조치
 
 		public Geocode() { }
 

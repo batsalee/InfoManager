@@ -12,7 +12,7 @@ namespace IMClient
 	{		
 		// 시작지역, 도착지역, 걸리는 시간
 		XmlNodeList duration;
-		const string googleKey = "AIzaSyAkM6C1d9pbg6hYJHOFRo72vNpFzHNwGU8";
+		const string googleKey = ""; // GitGuardian Mail 전송 후 삭제조치
 		// 사고정보, 실시간 정보 등
 		//.....
 
